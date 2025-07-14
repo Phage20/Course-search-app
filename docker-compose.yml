@@ -3,7 +3,7 @@ version: '3.8'
 services:
   elasticsearch:
     image: elasticsearch:8.14.0
-    container_name: elasticsearch
+    container_name: elasticsearch-new
     environment:
       - "discovery.type=single-node"
       - "xpack.security.enabled=false"
@@ -11,8 +11,8 @@ services:
       - "9200:9200"
       - "9300:9300"
     volumes:
-      - esdata:/usr/share/elasticsearch/data
+      - esdata-new:/usr/share/elasticsearch/data
 
 volumes:
-  esdata:
+  esdata-new:
     driver: local

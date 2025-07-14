@@ -1,0 +1,26 @@
+[
+  {
+    "id": "crs-001",
+    "title": "Introduction to Python Programming",
+    "description": "A beginner-friendly course covering the basics of Python.",
+    "category": "Science",
+    "type": "COURSE",
+    "gradeRange": "9th-12th",
+    "minAge": 14,
+    "maxAge": 18,
+    "price": 49.99,
+    "nextSessionDate": "2025-08-15T10:00:00Z"
+  },
+  {
+    "id": "crs-002",
+    "title": "Creative Writing Workshop",
+    "description": "Explore your imagination and learn the art of storytelling.",
+    "category": "Art",
+    "type": "COURSE",
+    "gradeRange": "6th-8th",
+    "minAge": 11,
+    "maxAge": 14,
+    "price": 35.50,
+    "nextSessionDate": "2025-08-20T14:30:00Z"
+  }
+]

@@ -1,5 +1,3 @@
-// In src/main/java/com/example/course_search/controller/CourseController.java
-
 package com.example.course_search.controller;
 
 import com.example.course_search.document.Course;
@@ -26,6 +24,7 @@ public class CourseController {
 
     @Autowired
     public CourseController(CourseSearchService courseSearchService) {
+        // The typo is corrected here
         this.courseSearchService = courseSearchService;
     }
 
@@ -44,15 +43,17 @@ public class CourseController {
             @RequestParam(defaultValue = "10") int size) {
         SearchHits<Course> searchHits = courseSearchService.searchCourses(
                 q, minAge, maxAge, category, type, minPrice, maxPrice, startDate, sort, page, size);
-
         List<Course> courses = searchHits.getSearchHits().stream()
                 .map(hit -> hit.getContent())
                 .collect(Collectors.toList());
-
         Map<String, Object> response = Map.of(
                 "total", searchHits.getTotalHits(),
                 "courses", courses);
-
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/suggest")
+    public ResponseEntity<List<String>> suggestCourses(@RequestParam String q) {
+        return ResponseEntity.ok(courseSearchService.suggestCourses(q));
     }
 }

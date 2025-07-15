@@ -5,9 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.CompletionField;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.core.suggest.Completion;
 
 import java.time.Instant;
 
@@ -15,38 +17,40 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document(indexName = "courses") // Maps this class to an Elasticsearch index named "courses"
-public class Course { // Class name is Course as requested
+@Document(indexName = "courses")
+public class Course {
 
-    @Id // Marks this field as the ID of the Elasticsearch document
+    @Id
     private String id;
 
-    @Field(type = FieldType.Text, name = "title", analyzer = "english") // Text field with English analyzer for
-                                                                        // full-text search
+    @Field(type = FieldType.Text, name = "title", analyzer = "english")
     private String title;
 
-    @Field(type = FieldType.Text, name = "description", analyzer = "english") // Text field with English analyzer for
-                                                                              // full-text search
+    // This is the new field for autocomplete suggestions
+    @CompletionField(analyzer = "standard", searchAnalyzer = "standard")
+    private Completion titleSuggest;
+
+    @Field(type = FieldType.Text, name = "description", analyzer = "english")
     private String description;
 
-    @Field(type = FieldType.Keyword, name = "category") // Keyword for exact matching/filtering
+    @Field(type = FieldType.Keyword, name = "category")
     private String category;
 
-    @Field(type = FieldType.Keyword, name = "type") // Keyword for exact matching/filtering
+    @Field(type = FieldType.Keyword, name = "type")
     private String type;
 
-    @Field(type = FieldType.Keyword, name = "gradeRange") // Changed to Keyword for exact filtering
+    @Field(type = FieldType.Keyword, name = "gradeRange")
     private String gradeRange;
 
-    @Field(type = FieldType.Integer, name = "minAge") // Integer for numeric age field
-    private Integer minAge; // Using Integer wrapper to allow nulls
+    @Field(type = FieldType.Integer, name = "minAge")
+    private Integer minAge;
 
-    @Field(type = FieldType.Integer, name = "maxAge") // Integer for numeric age field
-    private Integer maxAge; // Using Integer wrapper
+    @Field(type = FieldType.Integer, name = "maxAge")
+    private Integer maxAge;
 
-    @Field(type = FieldType.Double, name = "price") // Double for decimal price field
-    private Double price; // Using Double wrapper
+    @Field(type = FieldType.Double, name = "price")
+    private Double price;
 
-    @Field(type = FieldType.Date, name = "nextSessionDate") // Date field for ISO-8601 date-time
+    @Field(type = FieldType.Date, name = "nextSessionDate")
     private Instant nextSessionDate;
 }
